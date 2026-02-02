@@ -1,20 +1,29 @@
-# Repo Description
-This repo is organized as follows:
+## Repository Structure
 
+This repository is organized as follows:
+
+```text
+├── aggregation_protocols               # Aggregation rules (e.g., FedAvg, FedProx)
+├── dataset_loaders                     # Dataset loaders (e.g., MNIST, CIFAR-10, Fashion-MNIST)
+├── models                              # Model definitions used per dataset
+├── utils                               # Type definitions, logging, and metric saving utilities
+├── install_packages_AMD.sh             # Dependencies for running on AMD GPUs
+├── install_packages_NVIDIA.sh          # Dependencies for running on NVIDIA GPUs
+├── run_simulations.sh                  # Experiment runner (parses CLI args and launches jobs)
+└── simulation_launcher.py              # Core FL simulator (Python + mpi4py)
 ```
-├── aggregation_protocols               # FedAvg, FedProx, etc.
-├── dataset_loaders                     # MNIST, CIFAR10, Fashion-MNIST, etc.
-├── models                              # The models utilized for the respective datasets
-├── utils                               # Some custom-class type definitions and metric savers
-├── install_packages_AMD.sh             # Python Packages necessary to run simulatinos on AMD GPU
-├── install_packages_NVIDIA.sh          # Python Packages necessary to run simulatinos on NVIDIA GPU
-├── run_simulations.sh                  # Bash script to run the simulations. Parses all the required inputs
-└── simulation_launcher.py              # FL Simulator code
-```
 
-# FL Simulation
-The `simulation_launcher.py` contains the Python + MPI4PY code that's required to run the FL simulation. In this code, I implemented the classic Hub-and-Spoke architecture, in which all clients communicate only with a single central server. 
+## Federated Learning Simulation
+The main entry point is `simulation_launcher.py`, which implements a Hub-and-Spoke (centralized) federated learning architecture using **Python** + **mpi4py (MPI)**. In this setup, clients communicate only with a single central server.
 
-In my implementation, clients exchange their model gradients instead of the actual model weights. That is, at every FL round, clients train their models, send the computed gradient to the server, return to their initial state and wait for the aggregated gradient. 
+## Gradient-Exchange Workflow
 
-This is gradient exchange and update workflow is one of the possible ways to conduct Federated Learning training and is in alignment with Federated Learning Contribution Estimation. Later, I will release the code in which I return different gradients for each client as a result of its contribution to the model.
+Instead of sending full model weights, clients exchange model updates as gradients:
+- The server broadcasts the current global model state.
+- Each client trains locally for one (or more) epochs.
+- Each client computes its gradient/update and sends it to the server.
+- The client resets back to the pre-training model state (so the server update is the only applied update).
+- The server aggregates received gradients and updates the global model.
+- The aggregated update is redistributed for the next round.
+
+This design is particularly convenient for Federated Learning Contribution Estimation, where utilities (e.g., cosine similarity between a client update and the aggregated update) are computed directly from gradients/updates.

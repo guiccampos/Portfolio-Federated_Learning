@@ -1,7 +1,20 @@
-# Portfolio-Federated_Learning
-Welcome! This is my portfolio showing my coding skills with Python, PyTorch and MPI4Py.
+## Federated Learning Architectures Portfolio
 
-Although there are several Federated Learning (FL) Frameworks out there with multiple several features, as part of my Master Thesis, I had to develop different FL architectures (e.g., Peer-to-Peer, M-ary tree-based) that were not available by default in the standard frameworks, as most of them used the traditional Hub-and-Spoke architecture. 
+Welcome! This repository is part of my Federated Learning research portfolio and highlights my work with **Python**, **PyTorch**, and **mpi4py (MPI)** for distributed training and simulation.
 
-Therefore, instead of customizing those frameworks to my need, which would require significant time and effort, I preferred to build my own code to simulate all the needed architectures. I will keep this repo updated with all the architectures when I'm allowed to make their codes publicly available.
+While several Federated Learning frameworks provide strong support for the **hub-and-spoke** (central server) setting, my Master’s thesis required evaluating **alternative communication topologies** that are not commonly available out-of-the-box—such as **peer-to-peer** and **hierarchical (M-ary tree)** architectures.
 
+Rather than heavily modifying an existing framework (often a large engineering effort with tight coupling to a specific execution model), I implemented a **custom simulation codebase** focused on:
+- rapid prototyping of FL architectures,
+- reproducible experiments,
+- transparent control of aggregation, communication, and client selection logic.
+
+Some modules are **temporarily unavailable for public release** due to research constraints. This repository will be updated as soon as additional components can be shared.
+
+### Tech Stack
+- Python
+- PyTorch
+- mpi4py / MPI
+
+### Architectures Available
+- Hub-and-Spoke 
