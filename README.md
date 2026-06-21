@@ -17,4 +17,7 @@ Some modules are **temporarily unavailable for public release** due to research 
 - mpi4py / MPI
 
 ### Architectures Available
-- Hub-and-Spoke 
+- CFFl-Hub-and-Spoke
+- CGSV-Hub-and-Spoke
+- FedAvg-Hub-and-Spoke
+- Standalone-ML
